@@ -1,14 +1,14 @@
 .container {
-  margin-top: 100px;
+  margin-top: 60px;
   display: flex;
   flex-direction: column;
- 
+
   justify-content: center;
   align-content: center;
-  padding-bottom: 60px; 
+  padding-bottom: 60px;
 }
 
-.todo{
+.todo {
   max-width: 700px;
   width: 100%;
   margin: 0 auto;
@@ -16,12 +16,12 @@
   border-radius: 8px;
   box-shadow: 0 1px 10px #000000;
   margin-bottom: 20px;
+  background-color: #457c5c;
 }
 
 .wrapper {
- display: inline-flex;
- justify-content: space-around;
-  
+  display: inline-flex;
+  justify-content: space-around;
 }
 
 .input {
@@ -29,7 +29,7 @@
   width: 340px;
   height: 20px;
   border-radius: 4px;
-  border: 2px solid #000000;
+  border: 2px solid transparent;
   outline: 2px solid transparent;
   padding: 10px;
   font-size: 16px;
@@ -40,7 +40,7 @@
 
 .input:focus {
   border: 2px solid transparent;
-  outline: 2px solid #65b7ee;
+  box-shadow: 0 0 0 0.25rem #608bc2;
 }
 
 .button {
@@ -53,64 +53,77 @@
   color: #ffffff;
   font-weight: 600;
   font-size: 16px;
-  background-color: #c02975;
+  background-color: #6b5862;
   cursor: pointer;
   transition: box-shadow ease-in 0.3s;
   height: 44px;
- 
+
   &__wrapper {
-    width: 190px;
+    width: 210px;
     display: flex;
     justify-content: space-between;
   }
   &--completed {
-    padding: 0;
-    width: 55px;
-    height: 30px;
+    width: 56px;
+    height: 20px;
     font-size: 12px;
   }
   &--remove {
-    width: 60px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     font-size: 12px;
   }
-  &--today{
+  &--today {
     width: 60px;
     height: 20px;
     font-size: 12px;
   }
-  &--week{
+  &--week {
     width: 90px;
     height: 20px;
     font-size: 12px;
   }
-  &--month{
+  &--month {
     width: 100px;
     height: 20px;
     font-size: 12px;
   }
-  &--all{
+  &--all {
     width: 50px;
     height: 20px;
     font-size: 12px;
   }
+  &--edit {
+    width: 30px;
+    height: 20px;
+    font-size: 12px;
+  }
+  &--delete {
+    width: 60px;
+    height: 20px;
+    font-size: 12px;
+  }
 }
-.bar{
+.bar {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
 }
 
-.tags__buttons{
+.tags__buttons {
   display: flex;
   justify-content: space-between;
-width: 320px;
-
+  width: 320px;
 }
-.list__wrapper{
- max-width: 700px;
+.list__wrapper {
+  max-width: 760px;
   width: 100%;
   margin: 0 auto;
+}
+
+.progress__title {
+  line-height: 10px;
+  color: #1d1c1c;
 }
 
 .task__item {
@@ -118,10 +131,10 @@ width: 320px;
   background-color: #ffffff;
   justify-content: space-between;
   border-radius: 8px;
-  border: 2px solid #000000;
-  padding: 10px 15px 10px 20px;
-  margin-bottom: 15px;
-  height: 100px;
+  box-shadow: 0px 1px 10px #000000;
+  padding: 15px 15px 15px 20px;
+  margin-bottom: 20px;
+  height: 250px;
   font-size: 18px;
   font-weight: 600;
   opacity: 1;
@@ -129,10 +142,42 @@ width: 320px;
     opacity: 0.6;
   }
 }
+.task__text {
+  text-align: left;
+  height: 20px;
+  width: 175px;
+  color: #000000;
+  padding: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 4px;
+  border: none;
+  background-color: #deb887;
+  &.active {
+    outline: 2px solid #ffffff;
+  }
+}
+
+.upload__image {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  width: 400px;
+}
+
+.dropdown {
+  width: 120px;
+  height: 24px;
+  border-radius: 4px;
+  padding: 0;
+  font-weight: 700;
+  background-color: #6b5862;
+  color: #ffffff;
+}
 .checkbox {
- display: inline-flex;
- align-items: center;
- margin-bottom: 30px;
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 30px;
   &__input {
     width: 20px;
     height: 20px;
@@ -144,12 +189,9 @@ width: 320px;
   }
 }
 
-.main__buttons{
-width: 295px;
-margin-left: 40px;
-display: flex;
-justify-content: space-between;
+.main__buttons {
+  width: 295px;
+  margin-left: 40px;
+  display: flex;
+  justify-content: space-between;
 }
-
-
-

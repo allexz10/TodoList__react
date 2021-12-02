@@ -1,6 +1,5 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable no-param-reassign */
 /* eslint-disable react/no-array-index-key */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useRef, useEffect } from 'react';
 import ProgressBar from '@ramonak/react-progress-bar';
 import Button from './components/Button/Button';
@@ -12,11 +11,12 @@ type Task = {
   completed: boolean;
   tag: string;
   edit: boolean;
+  image: boolean;
+  id: number;
 };
 
 const tags = ['today', 'this week', 'this month'];
 
-// localStorage.setItem('tasks', JSON.stringify([]));
 const App = () => {
   const [tasks, setTasks] = useState<Task[]>(() => {
     const saved = localStorage.getItem('toDoList') || '';
@@ -31,8 +31,9 @@ const App = () => {
   const [allTasks, setAllTasks] = useState<Task[]>([]);
   const [showCompleted, setShowCompleted] = useState(false);
   const [progressBar, setProgressBar] = useState(0);
-
+  const [id, setId] = useState(0);
   const [selectedImage, setSelectedImage] = useState<File | null>();
+  const [imageVisible, setImageVisible] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('toDoList', JSON.stringify(tasks));
@@ -57,7 +58,8 @@ const App = () => {
   }, []);
 
   const addNewTask = () => {
-    if (inputValue) {
+    if (inputValue.trim()) {
+      setId(id + 1);
       setTasks([
         ...tasks,
         {
@@ -65,6 +67,8 @@ const App = () => {
           completed: false,
           tag: tags[0],
           edit: false,
+          image: imageVisible,
+          id,
         },
       ]);
       setInputValue('');
@@ -159,6 +163,7 @@ const App = () => {
   };
 
   const showAll = () => setTasks([...allTasks]);
+
   return (
     <div className="container">
       <div className="todo">
@@ -208,9 +213,9 @@ const App = () => {
         <h1 className="progress__title">Progress bar</h1>
         <ProgressBar
           completed={progressBar}
-          bgColor="#733e94"
-          baseBgColor="#94944b"
-          labelColor="#c33131"
+          bgColor="#bd5a96"
+          baseBgColor="#6b5862"
+          labelColor="#ffffff"
         />
       </div>
       <div className="list__wrapper">
@@ -221,13 +226,13 @@ const App = () => {
             style={{ background: '#DEB887' }}
           >
             <input
+              className={task.edit ? 'task__text active' : 'task__text'}
               type="text"
               value={task.name}
               disabled={!task.edit}
               onChange={(e) => editTask(e, index)}
             />
-            <div>
-              <h1>Upload and Display Image usign React Hooks</h1>
+            <div className="upload__image">
               {selectedImage && (
                 <div>
                   <img
@@ -236,12 +241,15 @@ const App = () => {
                     src={URL.createObjectURL(selectedImage)}
                   />
                   <br />
-                  <button onClick={() => setSelectedImage(null)}>Remove</button>
+                  <button
+                    className="button button--delete"
+                    onClick={() => setSelectedImage(null)}
+                  >
+                    remove
+                  </button>
                 </div>
               )}
-              <br />
 
-              <br />
               <input
                 type="file"
                 name="myImage"
@@ -253,31 +261,27 @@ const App = () => {
               />
             </div>
             <div className="button__wrapper">
+              <select
+                className="dropdown"
+                value={task.tag}
+                name={task.tag}
+                onChange={(e) => dropDownValue(e, index)}
+              >
+                {tags.map((tag) => (
+                  <option key={tag} value={tag}>
+                    {tag}
+                  </option>
+                ))}
+              </select>
               <button
+                className="button button--edit"
                 onClick={() => {
                   editActive(index);
                 }}
               >
                 {task.edit ? 'save' : 'edit'}
               </button>
-              <>
-                <select
-                  value={task.tag}
-                  name={task.tag}
-                  style={{
-                    background: '#c02975',
-                    color: 'white',
-                    height: '30px',
-                  }}
-                  onChange={(e) => dropDownValue(e, index)}
-                >
-                  {tags.map((tag) => (
-                    <option key={tag} value={tag}>
-                      {tag}
-                    </option>
-                  ))}
-                </select>
-              </>
+
               <button
                 className="button button--completed"
                 onClick={() => taskDone(index)}
@@ -287,7 +291,9 @@ const App = () => {
               <button
                 key={index}
                 className="button button--remove"
-                onClick={() => deleteTask(index)}
+                onClick={() => {
+                  deleteTask(index);
+                }}
               >
                 X
               </button>
